@@ -1,5 +1,6 @@
 import { HelmetProvider, Helmet } from "react-helmet-async";
-import { ConfigProvider, useConfig } from "./context/ConfigContext";
+import { ConfigProvider } from "./context/ConfigContext";
+import { useConfig } from "./hooks/useConfig";
 import { useTheme } from "./hooks/useTheme";
 import { Layout } from "./components/layout/Layout";
 import { Hero } from "./components/sections/Hero";

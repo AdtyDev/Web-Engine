@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useConfig } from "../../context/ConfigContext";
+import { useConfig } from "../../hooks/useConfig";
 
 /**
  * DevSwitcher — floating panel that lets you hot-swap between client configs.
