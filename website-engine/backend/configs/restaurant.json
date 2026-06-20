@@ -1,0 +1,177 @@
+{
+  "client_id": "restaurant",
+  "meta": {
+    "business_name": "Tandoor & Tales",
+    "business_type": "restaurant",
+    "tagline": "Slow fire, bold flavours",
+    "logo_url": "/assets/restaurant/logo.png",
+    "favicon_url": "/assets/restaurant/favicon.ico"
+  },
+  "seo": {
+    "title": "Tandoor & Tales — North Indian Restaurant in Pune",
+    "description": "Authentic North Indian cuisine with wood-fire tandoor, craft cocktails, and live music every weekend. Koregaon Park, Pune.",
+    "keywords": ["restaurant", "Indian food", "tandoor", "Pune", "Koregaon Park", "North Indian"],
+    "og_image": "/assets/restaurant/og.jpg"
+  },
+  "theme": {
+    "primary_color": "#b45309",
+    "secondary_color": "#78350f",
+    "accent_color": "#fbbf24",
+    "font_heading": "Playfair Display",
+    "font_body": "Lato",
+    "border_radius": "sm"
+  },
+  "contact": {
+    "phone": "+91 95555 67890",
+    "email": "reservations@tandoorandtales.in",
+    "address": "12 Boat Club Road, Koregaon Park, Pune 411 001",
+    "map_embed_url": "",
+    "hours": [
+      { "day": "Monday – Thursday", "time": "12:00 PM – 11:00 PM" },
+      { "day": "Friday – Saturday", "time": "12:00 PM – 1:00 AM" },
+      { "day": "Sunday", "time": "11:00 AM – 11:00 PM" }
+    ],
+    "social": {
+      "facebook": "https://facebook.com/tandoorandtales",
+      "instagram": "https://instagram.com/tandoorandtales",
+      "whatsapp": null
+    }
+  },
+  "navigation": [
+    { "label": "Story", "section": "about" },
+    { "label": "Menu", "section": "offerings" },
+    { "label": "Gallery", "section": "gallery" },
+    { "label": "Reviews", "section": "testimonials" },
+    { "label": "Contact", "section": "contact" }
+  ],
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "headline": "Where Every Meal Tells a Story",
+      "subheadline": "Wood-fire tandoor. Family recipes from the frontier. A table with your name on it.",
+      "cta_text": "Reserve a Table",
+      "cta_link": "#contact",
+      "background_image": "/assets/restaurant/hero.jpg"
+    },
+    "about": {
+      "enabled": true,
+      "title": "Our Story",
+      "body": "Tandoor & Tales was born from a single clay oven and a grandmother's recipe book brought from Amritsar. We slow-cook every kebab, every dal, every bread over charcoal — no shortcuts, no compromises. Come hungry.",
+      "image": "/assets/restaurant/about.jpg",
+      "stats": [
+        { "label": "Years Open", "value": "8" },
+        { "label": "Dishes on Menu", "value": "60+" },
+        { "label": "Covers per Night", "value": "120" },
+        { "label": "Events Hosted", "value": "300+" }
+      ]
+    },
+    "offerings": {
+      "enabled": true,
+      "title": "Our Menu",
+      "type": "menu",
+      "items": [
+        {
+          "id": "dal-makhani",
+          "name": "Dal Makhani",
+          "description": "Black lentils slow-cooked for 24 hours, finished with cream and smoked butter.",
+          "price": 380.0,
+          "currency": "INR",
+          "image": null,
+          "icon": null,
+          "featured": true
+        },
+        {
+          "id": "seekh-kebab",
+          "name": "Seekh Kebab",
+          "description": "Minced lamb mixed with house spice blend, skewered and charred in the tandoor.",
+          "price": 520.0,
+          "currency": "INR",
+          "image": null,
+          "icon": null,
+          "featured": true
+        },
+        {
+          "id": "butter-chicken",
+          "name": "Murgh Makhani",
+          "description": "Tender tandoori chicken in a rich tomato-butter gravy. A Punjabi heirloom.",
+          "price": 480.0,
+          "currency": "INR",
+          "image": null,
+          "icon": null,
+          "featured": false
+        },
+        {
+          "id": "laccha-paratha",
+          "name": "Laccha Paratha",
+          "description": "Flaky whole-wheat flatbread layered with ghee, baked fresh in the tandoor.",
+          "price": 90.0,
+          "currency": "INR",
+          "image": null,
+          "icon": null,
+          "featured": false
+        }
+      ]
+    },
+    "gallery": {
+      "enabled": true,
+      "title": "A Feast for the Eyes",
+      "images": [
+        "/assets/restaurant/gallery-1.jpg",
+        "/assets/restaurant/gallery-2.jpg",
+        "/assets/restaurant/gallery-3.jpg",
+        "/assets/restaurant/gallery-4.jpg"
+      ]
+    },
+    "team": {
+      "enabled": false,
+      "title": "",
+      "members": []
+    },
+    "testimonials": {
+      "enabled": true,
+      "title": "Guest Reviews",
+      "items": [
+        {
+          "name": "Vikram S.",
+          "text": "The dal makhani alone is worth the drive from Baner. Smoked on the inside, silky on the outside. Nothing like it in Pune.",
+          "rating": 5
+        },
+        {
+          "name": "Neha T.",
+          "text": "Celebrated our anniversary here. Ambience, food, and service were all top notch. The live ghazals were a lovely touch.",
+          "rating": 5
+        }
+      ]
+    },
+    "pricing": {
+      "enabled": false,
+      "title": "",
+      "plans": []
+    },
+    "faq": {
+      "enabled": true,
+      "title": "Good to Know",
+      "items": [
+        {
+          "q": "Do you take reservations?",
+          "a": "Yes — strongly recommended on weekends. Fill out the contact form and we'll confirm by WhatsApp within the hour."
+        },
+        {
+          "q": "Is there a vegetarian menu?",
+          "a": "Absolutely. Around 40% of our menu is vegetarian, including several vegan options. Just ask your server."
+        }
+      ]
+    },
+    "contact": {
+      "enabled": true,
+      "title": "Reservations & Enquiries",
+      "show_form": true,
+      "show_map": false
+    }
+  },
+  "features": {
+    "booking_enabled": false,
+    "newsletter_enabled": false,
+    "blog_enabled": false
+  }
+}

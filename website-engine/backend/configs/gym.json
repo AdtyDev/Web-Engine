@@ -1,0 +1,223 @@
+{
+  "client_id": "gym",
+  "meta": {
+    "business_name": "Iron Republic Gym",
+    "business_type": "gym",
+    "tagline": "Build the body. Build the discipline.",
+    "logo_url": "/assets/gym/logo.png",
+    "favicon_url": "/assets/gym/favicon.ico"
+  },
+  "seo": {
+    "title": "Iron Republic Gym — Strength & Conditioning, Bengaluru",
+    "description": "State-of-the-art strength and conditioning facility in Indiranagar, Bengaluru. Personal training, group classes, and nutrition coaching.",
+    "keywords": ["gym", "fitness", "strength", "Bengaluru", "Indiranagar", "personal trainer"],
+    "og_image": "/assets/gym/og.jpg"
+  },
+  "theme": {
+    "primary_color": "#dc2626",
+    "secondary_color": "#1c1c1c",
+    "accent_color": "#facc15",
+    "font_heading": "Oswald",
+    "font_body": "Roboto",
+    "border_radius": "sm"
+  },
+  "contact": {
+    "phone": "+91 80 4567 8901",
+    "email": "join@ironrepublic.in",
+    "address": "44, 12th Main Road, HAL 2nd Stage, Indiranagar, Bengaluru 560 008",
+    "map_embed_url": "",
+    "hours": [
+      { "day": "Monday – Friday", "time": "5:30 AM – 11:00 PM" },
+      { "day": "Saturday – Sunday", "time": "6:00 AM – 9:00 PM" }
+    ],
+    "social": {
+      "facebook": null,
+      "instagram": "https://instagram.com/ironrepublicgym",
+      "whatsapp": "https://wa.me/918045678901"
+    }
+  },
+  "navigation": [
+    { "label": "About", "section": "about" },
+    { "label": "Programs", "section": "offerings" },
+    { "label": "Memberships", "section": "pricing" },
+    { "label": "Gallery", "section": "gallery" },
+    { "label": "Reviews", "section": "testimonials" },
+    { "label": "FAQ", "section": "faq" },
+    { "label": "Join", "section": "contact" }
+  ],
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "headline": "No Excuses. Just Results.",
+      "subheadline": "Professional coaches, premium equipment, and a community that holds you accountable every single day.",
+      "cta_text": "Start Your Free Trial",
+      "cta_link": "#contact",
+      "background_image": "/assets/gym/hero.jpg"
+    },
+    "about": {
+      "enabled": true,
+      "title": "The Iron Republic Story",
+      "body": "Founded by national powerlifting champion Karan Shetty, Iron Republic was built for people serious about progress. No cardio-bunny machines, no gimmicks — just world-class equipment, science-backed programming, and coaches who've competed at the highest level.",
+      "image": "/assets/gym/about.jpg",
+      "stats": [
+        { "label": "Active Members", "value": "600+" },
+        { "label": "Certified Coaches", "value": "12" },
+        { "label": "Sq. Ft. Facility", "value": "8,000" },
+        { "label": "Competition Athletes", "value": "45+" }
+      ]
+    },
+    "offerings": {
+      "enabled": true,
+      "title": "Training Programs",
+      "type": "programs",
+      "items": [
+        {
+          "id": "strength-conditioning",
+          "name": "Strength & Conditioning",
+          "description": "Periodised barbell programming for powerlifting and general strength. 5 sessions per week.",
+          "price": null,
+          "currency": "INR",
+          "image": null,
+          "icon": "dumbbell",
+          "featured": true
+        },
+        {
+          "id": "hiit-metcon",
+          "name": "HIIT & MetCon",
+          "description": "High-intensity interval and metabolic conditioning. Burn fat, build capacity. 6 AM and 7 PM slots.",
+          "price": null,
+          "currency": "INR",
+          "image": null,
+          "icon": "zap",
+          "featured": false
+        },
+        {
+          "id": "personal-training",
+          "name": "Personal Training",
+          "description": "One-on-one sessions with a certified coach. Custom programming, form coaching, and nutrition guidance.",
+          "price": null,
+          "currency": "INR",
+          "image": null,
+          "icon": "user-check",
+          "featured": true
+        },
+        {
+          "id": "nutrition-coaching",
+          "name": "Nutrition Coaching",
+          "description": "Body composition analysis + personalised meal planning with monthly check-ins.",
+          "price": null,
+          "currency": "INR",
+          "image": null,
+          "icon": "salad",
+          "featured": false
+        }
+      ]
+    },
+    "gallery": {
+      "enabled": true,
+      "title": "The Facility",
+      "images": [
+        "/assets/gym/gallery-1.jpg",
+        "/assets/gym/gallery-2.jpg",
+        "/assets/gym/gallery-3.jpg",
+        "/assets/gym/gallery-4.jpg"
+      ]
+    },
+    "team": {
+      "enabled": false,
+      "title": "",
+      "members": []
+    },
+    "testimonials": {
+      "enabled": true,
+      "title": "Member Results",
+      "items": [
+        {
+          "name": "Ananya R.",
+          "text": "Lost 14 kg in 6 months with the HIIT program and nutrition coaching. The coaches don't let you slack — in the best way.",
+          "rating": 5
+        },
+        {
+          "name": "Deepak M.",
+          "text": "Went from a 90 kg squat to 160 kg in one year training here. The programming is legit, the facility is premium.",
+          "rating": 5
+        }
+      ]
+    },
+    "pricing": {
+      "enabled": true,
+      "title": "Membership Plans",
+      "plans": [
+        {
+          "id": "day-pass",
+          "name": "Day Pass",
+          "price": 299.0,
+          "currency": "INR",
+          "period": "visit",
+          "description": "Full facility access for one day. Includes locker.",
+          "features": ["Full equipment access", "Group class (if scheduled)", "Locker use"],
+          "featured": false
+        },
+        {
+          "id": "monthly",
+          "name": "Monthly",
+          "price": 2499.0,
+          "currency": "INR",
+          "period": "month",
+          "description": "Unlimited facility access for 30 days.",
+          "features": ["Unlimited sessions", "All group classes", "Locker & towel service", "App access"],
+          "featured": false
+        },
+        {
+          "id": "quarterly",
+          "name": "Quarterly",
+          "price": 5999.0,
+          "currency": "INR",
+          "period": "3 months",
+          "description": "Best value — 3 months unlimited access.",
+          "features": ["Unlimited sessions", "All group classes", "Locker & towel service", "App access", "1 free PT session"],
+          "featured": true
+        },
+        {
+          "id": "annual",
+          "name": "Annual",
+          "price": 17999.0,
+          "currency": "INR",
+          "period": "year",
+          "description": "Committed for the long game. Biggest savings.",
+          "features": ["Unlimited sessions", "All group classes", "Locker & towel service", "App access", "4 free PT sessions", "Free body composition analysis"],
+          "featured": false
+        }
+      ]
+    },
+    "faq": {
+      "enabled": true,
+      "title": "FAQ",
+      "items": [
+        {
+          "q": "Can beginners join?",
+          "a": "Absolutely. We have programs designed for all levels. New members get a free orientation session with a coach."
+        },
+        {
+          "q": "Is there a free trial?",
+          "a": "Yes — one free trial session for first-time visitors. Just fill out the contact form to book it."
+        },
+        {
+          "q": "Do you offer women-only slots?",
+          "a": "Yes. Monday, Wednesday, and Friday from 10 AM to 12 PM are women-only. All coaches are certified."
+        }
+      ]
+    },
+    "contact": {
+      "enabled": true,
+      "title": "Join Iron Republic",
+      "show_form": true,
+      "show_map": false
+    }
+  },
+  "features": {
+    "booking_enabled": false,
+    "newsletter_enabled": false,
+    "blog_enabled": false
+  }
+}

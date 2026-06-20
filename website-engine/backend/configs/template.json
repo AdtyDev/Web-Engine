@@ -1,0 +1,96 @@
+{
+  "client_id": "",
+  "meta": {
+    "business_name": "",
+    "business_type": "other",
+    "tagline": "",
+    "logo_url": "",
+    "favicon_url": ""
+  },
+  "seo": {
+    "title": "",
+    "description": "",
+    "keywords": [],
+    "og_image": ""
+  },
+  "theme": {
+    "primary_color": "#2563eb",
+    "secondary_color": "#64748b",
+    "accent_color": "#f59e0b",
+    "font_heading": "Inter",
+    "font_body": "Inter",
+    "border_radius": "md"
+  },
+  "contact": {
+    "phone": "",
+    "email": "",
+    "address": "",
+    "map_embed_url": "",
+    "hours": [],
+    "social": {
+      "facebook": null,
+      "instagram": null,
+      "whatsapp": null
+    }
+  },
+  "navigation": [],
+  "sections": {
+    "hero": {
+      "enabled": false,
+      "headline": "",
+      "subheadline": "",
+      "cta_text": "",
+      "cta_link": "",
+      "background_image": ""
+    },
+    "about": {
+      "enabled": false,
+      "title": "",
+      "body": "",
+      "image": "",
+      "stats": []
+    },
+    "offerings": {
+      "enabled": false,
+      "title": "",
+      "type": "services",
+      "items": []
+    },
+    "gallery": {
+      "enabled": false,
+      "title": "",
+      "images": []
+    },
+    "team": {
+      "enabled": false,
+      "title": "",
+      "members": []
+    },
+    "testimonials": {
+      "enabled": false,
+      "title": "",
+      "items": []
+    },
+    "pricing": {
+      "enabled": false,
+      "title": "",
+      "plans": []
+    },
+    "faq": {
+      "enabled": false,
+      "title": "",
+      "items": []
+    },
+    "contact": {
+      "enabled": false,
+      "title": "",
+      "show_form": true,
+      "show_map": true
+    }
+  },
+  "features": {
+    "booking_enabled": false,
+    "newsletter_enabled": false,
+    "blog_enabled": false
+  }
+}

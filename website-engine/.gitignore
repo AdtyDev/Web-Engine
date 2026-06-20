@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+venv/
+.venv/
+
+# Environment
+.env
+*.env.local
+
+# Frontend
+node_modules/
+dist/
+.DS_Store
+
+# Replit
+.replit
+replit.nix

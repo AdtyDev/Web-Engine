@@ -1,0 +1,231 @@
+{
+  "client_id": "clinic",
+  "meta": {
+    "business_name": "Sunrise Multi-Speciality Clinic",
+    "business_type": "clinic",
+    "tagline": "Your health, our priority",
+    "logo_url": "/assets/clinic/logo.png",
+    "favicon_url": "/assets/clinic/favicon.ico"
+  },
+  "seo": {
+    "title": "Sunrise Clinic — Quality Healthcare in Mumbai",
+    "description": "Sunrise Multi-Speciality Clinic offers expert medical care across general medicine, dermatology, and orthopaedics in Andheri, Mumbai.",
+    "keywords": ["clinic", "doctor", "healthcare", "Mumbai", "Andheri", "multi-speciality"],
+    "og_image": "/assets/clinic/og.jpg"
+  },
+  "theme": {
+    "primary_color": "#0d6efd",
+    "secondary_color": "#6c757d",
+    "accent_color": "#20c997",
+    "font_heading": "Merriweather",
+    "font_body": "Inter",
+    "border_radius": "md"
+  },
+  "contact": {
+    "phone": "+91 98201 34567",
+    "email": "hello@sunriseclinic.in",
+    "address": "Shop 4, Sunrise Complex, Lokhandwala Road, Andheri West, Mumbai 400 053",
+    "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.1",
+    "hours": [
+      { "day": "Monday – Friday", "time": "9:00 AM – 8:00 PM" },
+      { "day": "Saturday", "time": "9:00 AM – 5:00 PM" },
+      { "day": "Sunday", "time": "10:00 AM – 2:00 PM" }
+    ],
+    "social": {
+      "facebook": "https://facebook.com/sunriseclinic",
+      "instagram": "https://instagram.com/sunriseclinic",
+      "whatsapp": "https://wa.me/919820134567"
+    }
+  },
+  "navigation": [
+    { "label": "About", "section": "about" },
+    { "label": "Services", "section": "offerings" },
+    { "label": "Team", "section": "team" },
+    { "label": "Gallery", "section": "gallery" },
+    { "label": "Reviews", "section": "testimonials" },
+    { "label": "FAQ", "section": "faq" },
+    { "label": "Contact", "section": "contact" }
+  ],
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "headline": "Compassionate Care, Expert Treatment",
+      "subheadline": "Over 15 years of trusted healthcare in the heart of Mumbai. Walk in or book an appointment online.",
+      "cta_text": "Book Appointment",
+      "cta_link": "#contact",
+      "background_image": "/assets/clinic/hero.jpg"
+    },
+    "about": {
+      "enabled": true,
+      "title": "About Sunrise Clinic",
+      "body": "Founded in 2009 by Dr. Priya Mehta, Sunrise Clinic has grown into a trusted multi-speciality practice serving over 20,000 patients across Mumbai. We combine modern diagnostics with a patient-first approach to ensure every visit is as comfortable as it is effective.",
+      "image": "/assets/clinic/about.jpg",
+      "stats": [
+        { "label": "Years in Practice", "value": "15+" },
+        { "label": "Patients Served", "value": "20,000+" },
+        { "label": "Specialists on Staff", "value": "6" },
+        { "label": "5-Star Reviews", "value": "450+" }
+      ]
+    },
+    "offerings": {
+      "enabled": true,
+      "title": "Our Services",
+      "type": "services",
+      "items": [
+        {
+          "id": "general-medicine",
+          "name": "General Medicine",
+          "description": "Comprehensive check-ups, fever management, chronic disease monitoring, and preventive care for all ages.",
+          "price": 500.0,
+          "currency": "INR",
+          "image": null,
+          "icon": "stethoscope",
+          "featured": true
+        },
+        {
+          "id": "dermatology",
+          "name": "Dermatology",
+          "description": "Skin, hair, and nail consultations. Expert treatment for acne, eczema, psoriasis, and cosmetic concerns.",
+          "price": 800.0,
+          "currency": "INR",
+          "image": null,
+          "icon": "sparkles",
+          "featured": false
+        },
+        {
+          "id": "orthopaedics",
+          "name": "Orthopaedics",
+          "description": "Joint pain, sports injuries, fracture management, and physiotherapy referrals.",
+          "price": 700.0,
+          "currency": "INR",
+          "image": null,
+          "icon": "bone",
+          "featured": false
+        },
+        {
+          "id": "paediatrics",
+          "name": "Paediatrics",
+          "description": "Well-baby visits, vaccinations, growth monitoring, and illness management for children 0–18 years.",
+          "price": 600.0,
+          "currency": "INR",
+          "image": null,
+          "icon": "baby",
+          "featured": false
+        },
+        {
+          "id": "diagnostics",
+          "name": "In-Clinic Diagnostics",
+          "description": "On-site blood work, ECG, and urine analysis. Results in 2–4 hours.",
+          "price": 250.0,
+          "currency": "INR",
+          "image": null,
+          "icon": "flask-conical",
+          "featured": false
+        },
+        {
+          "id": "health-packages",
+          "name": "Annual Health Packages",
+          "description": "Preventive health screening packages covering 30+ tests with a complimentary doctor review.",
+          "price": 2999.0,
+          "currency": "INR",
+          "image": null,
+          "icon": "shield-check",
+          "featured": true
+        }
+      ]
+    },
+    "gallery": {
+      "enabled": true,
+      "title": "Our Clinic",
+      "images": [
+        "/assets/clinic/gallery-1.jpg",
+        "/assets/clinic/gallery-2.jpg",
+        "/assets/clinic/gallery-3.jpg",
+        "/assets/clinic/gallery-4.jpg"
+      ]
+    },
+    "team": {
+      "enabled": true,
+      "title": "Meet Our Doctors",
+      "members": [
+        {
+          "name": "Dr. Priya Mehta",
+          "role": "Founder & General Physician",
+          "photo": "/assets/clinic/team-priya.jpg",
+          "bio": "MBBS, MD (Internal Medicine), AIIMS Delhi. 15+ years of experience in general and preventive medicine."
+        },
+        {
+          "name": "Dr. Arjun Nair",
+          "role": "Dermatologist",
+          "photo": "/assets/clinic/team-arjun.jpg",
+          "bio": "MBBS, DVD, Bombay Hospital. Specialises in medical and cosmetic dermatology."
+        },
+        {
+          "name": "Dr. Shalini Rao",
+          "role": "Paediatrician",
+          "photo": "/assets/clinic/team-shalini.jpg",
+          "bio": "MBBS, MD (Paediatrics), KEM Hospital. Caring for Mumbai's children for over a decade."
+        }
+      ]
+    },
+    "testimonials": {
+      "enabled": true,
+      "title": "What Our Patients Say",
+      "items": [
+        {
+          "name": "Aisha K.",
+          "text": "Dr. Mehta took the time to really listen. Diagnosed my thyroid issue after months of other doctors missing it. Highly recommend.",
+          "rating": 5
+        },
+        {
+          "name": "Rohan P.",
+          "text": "Brought my 3-year-old son to Dr. Rao. She was so patient and gentle. The clinic is spotless and the staff are warm.",
+          "rating": 5
+        },
+        {
+          "name": "Sunita M.",
+          "text": "Annual health package was great value — 30+ tests and a thorough review in one morning. No waiting around.",
+          "rating": 4
+        }
+      ]
+    },
+    "pricing": {
+      "enabled": false,
+      "title": "Consultation Fees",
+      "plans": []
+    },
+    "faq": {
+      "enabled": true,
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "q": "Do I need an appointment?",
+          "a": "Walk-ins are welcome, but booking ahead guarantees your preferred time slot and reduces waiting."
+        },
+        {
+          "q": "Which insurance panels do you accept?",
+          "a": "We accept Star Health, HDFC ERGO, Mediassist, and CGHS. Please carry your insurance card."
+        },
+        {
+          "q": "How long do diagnostic results take?",
+          "a": "Most routine tests are ready within 2–4 hours. Culture reports take 24–48 hours."
+        },
+        {
+          "q": "Is parking available?",
+          "a": "Yes — two-hour free parking is available in the Sunrise Complex basement. Enter from the side lane."
+        }
+      ]
+    },
+    "contact": {
+      "enabled": true,
+      "title": "Get in Touch",
+      "show_form": true,
+      "show_map": true
+    }
+  },
+  "features": {
+    "booking_enabled": false,
+    "newsletter_enabled": false,
+    "blog_enabled": false
+  }
+}

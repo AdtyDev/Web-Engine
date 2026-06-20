@@ -1,0 +1,253 @@
+---
+
+# WEBSITE ENGINE — Build Specification
+
+## 0. Role & Mission
+
+You are building a **website engine**, not a website. The deliverable is a single codebase that can produce an unlimited number of distinct business websites (clinics, restaurants, gyms, salons, etc.) where the *only* thing that changes between clients is a JSON config file and a folder of images. No per-client code, no per-client branches, no copy-pasted component files.
+
+```
+configs/clinic.json      ─┐
+configs/restaurant.json  ─┼──►  same engine  ──►  3 different live sites
+configs/gym.json         ─┘
+```
+
+If you ever find yourself about to hardcode a business name, a color hex code, a phrase like "Book Appointment", or an image path into a component — stop. That value belongs in the config schema, not in code.
+
+Work through this document **in the phase order given in §9**. After each phase, stop and show me what you built before moving to the next one. If anything here is ambiguous, ask me rather than guessing.
+
+---
+
+## 1. Tech Stack (decided — do not deviate)
+
+| Layer | Choice |
+|---|---|
+| Backend | Python 3.11+, FastAPI, Pydantic v2, Uvicorn |
+| Frontend | React 18 + Vite, TailwindCSS, react-helmet-async (SEO tags) |
+| Data store | None for v1 — config lives as JSON files on disk. Leave a clean seam to swap in Postgres later (for blog/booking), don't build it now |
+| Email (contact form) | smtplib via env vars, falls back to console logging in dev |
+| Architecture | **Decoupled**: React frontend talks to FastAPI over a JSON API. They deploy and scale independently |
+| Deployment targets | Must work on both a PaaS (Render/Railway) and a VPS via Docker — see §10 |
+
+---
+
+## 2. Repository Structure
+
+```
+website-engine/
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── core/
+│   │   │   └── settings.py          # env-driven settings (pydantic-settings)
+│   │   ├── models/
+│   │   │   └── config_schema.py     # Pydantic models = the source of truth schema
+│   │   ├── routers/
+│   │   │   ├── config.py            # GET /api/config
+│   │   │   ├── contact.py           # POST /api/contact
+│   │   │   └── health.py            # GET /api/health
+│   │   └── services/
+│   │       ├── config_loader.py     # loads + validates JSON config at startup
+│   │       └── email_service.py
+│   ├── configs/
+│   │   ├── template.json            # blank skeleton for new clients
+│   │   ├── clinic.json
+│   │   ├── restaurant.json
+│   │   └── gym.json
+│   ├── tests/
+│   ├── requirements.txt
+│   ├── Dockerfile
+│   └── .env.example
+│
+├── frontend/
+│   ├── public/
+│   │   ├── runtime-config.js        # per-deploy API URL — see §6.4
+│   │   └── assets/{client_slug}/    # per-client images
+│   ├── src/
+│   │   ├── main.jsx
+│   │   ├── App.jsx
+│   │   ├── api/
+│   │   │   └── client.js
+│   │   ├── context/
+│   │   │   └── ConfigContext.jsx
+│   │   ├── hooks/
+│   │   │   └── useTheme.js
+│   │   ├── components/
+│   │   │   ├── layout/{Navbar,Footer,Layout}.jsx
+│   │   │   ├── sections/{Hero,About,Offerings,Gallery,Team,Testimonials,Pricing,FAQ,ContactForm}.jsx
+│   │   │   └── ui/                  # generic buttons, cards, inputs
+│   │   └── styles/index.css
+│   ├── index.html
+│   ├── vite.config.js
+│   ├── tailwind.config.js
+│   ├── package.json
+│   ├── .env.example
+│   └── Dockerfile
+│
+├── docs/
+│   ├── CONFIG_SCHEMA.md
+│   └── NEW_CLIENT_WORKFLOW.md
+├── docker-compose.yml
+├── nginx/ (for VPS path)
+└── README.md
+```
+
+---
+
+## 3. The Config Schema (the contract)
+
+This is the single most important artifact in the repo — both frontend and backend are written *against* this shape and nothing else.
+
+| Field | Type | Notes |
+|---|---|---|
+| `client_id` | string | slug, e.g. `"sunrise-clinic"` — used for asset folder name |
+| `meta.business_name` | string | |
+| `meta.business_type` | enum `clinic\|restaurant\|gym\|salon\|other` | drives sensible copy/icon defaults |
+| `meta.tagline` | string | |
+| `meta.logo_url`, `meta.favicon_url` | string (path or URL) | |
+| `seo.title`, `seo.description`, `seo.keywords[]`, `seo.og_image` | | rendered via react-helmet-async |
+| `theme.primary_color`, `secondary_color`, `accent_color` | hex string | injected as CSS variables, see §6.3 |
+| `theme.font_heading`, `font_body` | string | Google Font names |
+| `theme.border_radius` | enum `sm\|md\|lg\|full` | |
+| `contact.phone`, `email`, `address` | string | |
+| `contact.map_embed_url` | string | |
+| `contact.hours[]` | `{day, time}` | |
+| `contact.social.{facebook,instagram,whatsapp}` | string, optional | |
+| `navigation[]` | `{label, section}` | only sections with `enabled: true` should appear |
+| `sections.hero` | `{enabled, headline, subheadline, cta_text, cta_link, background_image}` | |
+| `sections.about` | `{enabled, title, body, image, stats[]}` | `stats: {label, value}` |
+| `sections.offerings` | `{enabled, title, type: services\|menu\|programs, items[]}` | `items: {id, name, description, price, currency, image, icon, featured}` — this single section covers "Services" (clinic), "Menu" (restaurant), "Programs" (gym) |
+| `sections.gallery` | `{enabled, title, images[]}` | |
+| `sections.team` | `{enabled, title, members[]}` | `members: {name, role, photo, bio}` |
+| `sections.testimonials` | `{enabled, title, items[]}` | `items: {name, text, rating}` |
+| `sections.pricing` | `{enabled, title, plans[]}` | for recurring plans (gym memberships, clinic packages) — separate from `offerings` |
+| `sections.faq` | `{enabled, title, items[]}` | `items: {q, a}` |
+| `sections.contact` | `{enabled, title, show_form, show_map}` | |
+| `features.booking_enabled`, `newsletter_enabled`, `blog_enabled` | boolean | flags reserved for future use — not implemented in v1, just don't crash if true |
+
+Generate `backend/app/models/config_schema.py` as nested Pydantic models matching this table exactly — every `sections.*` entry is `Optional`, defaulting to `enabled: false`. One field per row above, no more, no less, for v1. Example of the style I want:
+
+```python
+class OfferingItem(BaseModel):
+    id: str
+    name: str
+    description: str | None = None
+    price: float | None = None
+    currency: str = "INR"
+    image: str | None = None
+    icon: str | None = None
+    featured: bool = False
+```
+
+Don't hand-maintain a separate JSON Schema file — generate `configs/schema.json` from the Pydantic models via `ClientConfig.model_json_schema()` in a small script, so there's one source of truth.
+
+Build `configs/clinic.json` as the fully-filled canonical reference example (realistic placeholder content, Indian phone/address format, `currency: "INR"`), and `configs/template.json` as the same shape with every value blank/empty — that's what gets copied for each new client.
+
+---
+
+## 4. Backend Spec (FastAPI)
+
+- **Settings** (`core/settings.py`, pydantic-settings, reads `.env`): `CLIENT_ID`, `CONFIG_DIR` (default `./configs`), `ALLOWED_ORIGINS` (comma-separated), `SMTP_HOST/PORT/USER/PASS/FROM/TO`, `ENV` (`dev`/`prod`).
+- **Startup**: load `configs/{CLIENT_ID}.json`, validate against `ClientConfig`. If it fails validation, crash immediately with a clear error — never serve a half-broken config.
+- **`GET /api/config`** → returns the validated config as JSON. This is the only endpoint the frontend needs to render the entire site.
+- **`POST /api/contact`** → body `{name, email, phone?, message, honeypot}`. If `honeypot` is non-empty, return `200 {"status":"ok"}` without sending anything (silently drop bots, don't tip them off). Otherwise validate, rate-limit by IP (simple in-memory token bucket is fine for v1), send via `email_service`, and log to console instead of failing if SMTP isn't configured (dev convenience).
+- **`GET /api/health`** → `{"status":"ok"}`.
+- **CORS**: `CORSMiddleware` restricted to `ALLOWED_ORIGINS` from settings — never `*` in prod.
+- Single-tenant for v1: one backend process = one `CLIENT_ID` = one config. (Multi-tenant, one process serving many domains via a `domain_map.json` + `Host` header, is a Phase 6 stretch goal — don't build it until the single-tenant path works end to end.)
+
+---
+
+## 5. Frontend Spec (React + Vite + Tailwind)
+
+- `ConfigContext` fetches `/api/config` once on load, exposes `{config, loading, error}` to the tree. Show a loading skeleton and a friendly error state (not a blank screen) if the fetch fails.
+- `useTheme()` runs on config load and sets CSS custom properties on `document.documentElement` (`--color-primary`, `--color-secondary`, `--color-accent`, `--font-heading`, `--font-body`, `--radius`) from `config.theme`. Tailwind classes throughout the app should reference these CSS vars (`bg-[var(--color-primary)]` etc.), never a hardcoded color.
+- `Navbar` builds its links from `config.navigation`, filtering out any section not `enabled`.
+- Every section component (`Hero`, `About`, `Offerings`, `Gallery`, `Team`, `Testimonials`, `Pricing`, `FAQ`, `ContactForm`) takes its slice of `config.sections.X` as props and returns `null` immediately if `enabled` is false. No component should ever know it's rendering for "a clinic" vs "a gym" — `Offerings` just reads `type` to pick an icon/label style, the data shape is identical.
+- `ContactForm`: client-side validation, hidden honeypot input, POSTs to the API, shows loading/success/error inline (no page reload).
+- SEO: `react-helmet-async` sets `<title>`, meta description, OG image from `config.seo`.
+- Responsive, semantic HTML, real `alt` text from config where images exist, visible focus states — this is a small-business site, it needs to work on a cracked Android phone in 3G.
+
+### 6.4 — Runtime API URL (important pattern, implement exactly this way)
+
+Because the frontend's *content* comes entirely from the backend at runtime, the React build itself never needs to differ between clients — only **which backend URL it calls** differs. Don't bake `API_URL` into the Vite build with `import.meta.env`. Instead:
+
+`frontend/public/runtime-config.js` (plain JS, not bundled, loaded via a `<script>` tag in `index.html` before the app bundle):
+```js
+window.__APP_CONFIG__ = { API_URL: "" }; // "" = same-origin, see below
+```
+
+`frontend/src/api/client.js`:
+```js
+const API_BASE = window.__APP_CONFIG__?.API_URL || '/api';
+export const fetchConfig = () => fetch(`${API_BASE}/config`).then(r => r.json());
+```
+
+This one line (`window.__APP_CONFIG__?.API_URL || '/api'`) is what lets the *exact same* compiled frontend bundle work in both deployment models in §10: on a VPS where nginx proxies `/api` to the backend on the same domain (leave `runtime-config.js` empty, zero CORS needed), and on a PaaS where frontend and backend are on different domains (overwrite `runtime-config.js` with the real backend URL at deploy time — a one-line file write, not a rebuild).
+
+---
+
+## 7. Engineering Rules (non-negotiable)
+
+- Nothing client-specific is ever hardcoded in a component — if it's visible text, a color, an image path, or a toggle, it comes from config.
+- Components are business-type-agnostic. `Offerings` must work identically for a dentist's services and a gym's class schedule.
+- Secrets only via env vars, never committed. Ship `.env.example`, not `.env`.
+- Comment non-obvious logic; write a handful of tests for `config_loader` (valid config loads, invalid config raises) and `/api/contact` (honeypot is silently dropped, valid submission 200s).
+- Fail fast and loud on a bad config at startup — never render a broken site silently.
+
+## 8. Out of Scope for v1 (don't build these — leave the seams, that's it)
+
+Booking/scheduling, payments, blog/CMS, multi-language i18n, a visual no-code config editor, an admin auth panel, analytics dashboard. The `features.*` flags exist in the schema precisely so these can be added later without restructuring anything.
+
+---
+
+## 9. Build Order — work through these phases one at a time, pause for my review after each
+
+1. **Scaffold** — full folder tree, `package.json`, `requirements.txt`, Vite config, FastAPI skeleton, `.gitignore`, base `README.md`. No logic yet.
+2. **Backend core** — `config_schema.py` Pydantic models, `config_loader.py`, `/api/health`, `/api/config`, CORS, settings.
+3. **Sample configs** — `template.json` (blank) + fully filled `clinic.json`, `restaurant.json`, `gym.json`.
+4. **Frontend core** — Vite+React+Tailwind scaffold, `ConfigContext`, `client.js` with the runtime-config pattern from §6.4, `useTheme`, `Layout`/`Navbar`/`Footer`.
+5. **Section components** — all nine, config-driven, conditionally rendered, responsive.
+6. **Contact form, end to end** — frontend form → `/api/contact` → honeypot check → rate limit → email (or console log in dev).
+7. **Deployment artifacts** — `backend/Dockerfile`, `frontend/Dockerfile`, root `docker-compose.yml` + `nginx/` config for the VPS path, plus `render.yaml` for the PaaS path. `.env.example` for both.
+8. **Polish pass** — Lighthouse-friendly (lazy-loaded images, no layout shift), 404 handling, accessibility check, loading/error states wired everywhere a fetch can fail.
+
+---
+
+## 10. Deployment — support both paths
+
+### A. PaaS (Render / Railway) — fastest to stand up a client
+- Backend → **Web Service**. Build: `pip install -r requirements.txt`. Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Env: `CLIENT_ID`, `ALLOWED_ORIGINS`, `SMTP_*`.
+- Frontend → **Static Site**. Build command writes the real backend URL into the runtime file right before building, so the React source never changes per client:
+  ```
+  echo "window.__APP_CONFIG__={API_URL:'$API_URL'};" > public/runtime-config.js && npm install && npm run build
+  ```
+  Publish directory: `dist`.
+- Generate a `render.yaml` blueprint defining both services, parameterized so a new client is "duplicate the blueprint, change the name and two env vars."
+
+### B. VPS + Docker — full control, cheapest at scale
+- Root `docker-compose.yml`: one `backend` service per client (FastAPI + uvicorn, `CLIENT_ID` env var) and one shared `frontend` service (nginx serving the static build).
+- nginx (or Caddy, simpler if I want automatic HTTPS — mention it as an alternative) gets one `server {}` block per client domain: serves the React build as static files and `proxy_pass`es `/api/` to that client's backend container. Because of the §6.4 pattern, `runtime-config.js` can stay empty (`API_URL: ""`) here — same-origin `/api` calls, no CORS to think about.
+- New client on a VPS = add one backend service block + one nginx server block + one DNS A record + `docker compose up -d`.
+
+---
+
+## 11. The "15-Minute New Client" Checklist
+
+1. `cp configs/template.json configs/{slug}.json`, fill it in (or run Workflow B below against a reference site)
+2. Drop images into `frontend/public/assets/{slug}/`
+3. PaaS: new backend Web Service (`CLIENT_ID={slug}`) + new Static Site (build writes that backend's URL into `runtime-config.js`)
+   — or —
+   VPS: add a compose service + nginx block + DNS record, `docker compose up -d`
+4. Hit `/api/config`, confirm it returns the right JSON, confirm the site renders
+5. Done
+
+---
+
+## 12. Definition of Done
+
+- [ ] `npm run dev` + `uvicorn app.main:app --reload` render `clinic.json` correctly with zero hardcoded client content in any component
+- [ ] Swapping `CLIENT_ID` to `restaurant` or `gym` and restarting the backend produces a visibly different, correctly themed site with no frontend code changes
+- [ ] Contact form round-trips to the backend, honeypot silently drops bot submissions, real submissions email or log correctly
+- [ ] Invalid config crashes backend startup with a clear error message
+- [ ] Both deployment paths (`docker-compose up` locally simulating VPS, and a Render blueprint dry-run) work using the exact same frontend build
+- [ ] Lighthouse score on the sample clinic site is reasonable (90+ performance/accessibility is the bar, not a hard requirement for v1)

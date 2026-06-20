@@ -1,0 +1,34 @@
+# PaaS (Render) blueprint.
+# Duplicate this file and change the two values in caps for each new client.
+# No code changes, no frontend rebuild — just these two env vars.
+
+services:
+  # ---------- Backend ----------
+  - type: web
+    name: website-engine-backend-CLIENTSLUG
+    runtime: python
+    rootDir: website-engine/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: CLIENT_ID
+        value: CLIENTSLUG          # <-- change this
+      - key: CONFIG_DIR
+        value: ./configs
+      - key: ALLOWED_ORIGINS
+        value: https://FRONTENDDOMAIN  # <-- change this
+      - key: ENV
+        value: prod
+
+  # ---------- Frontend ----------
+  - type: web
+    name: website-engine-frontend-CLIENTSLUG
+    runtime: static
+    rootDir: artifacts/website-engine
+    buildCommand: >
+      echo "window.__APP_CONFIG__={API_URL:'https://BACKENDDOMAIN'};" > public/runtime-config.js
+      && npm install
+      && npm run build
+    staticPublishPath: dist
+    # The same compiled bundle works for every client —
+    # only public/runtime-config.js (written above) differs.
