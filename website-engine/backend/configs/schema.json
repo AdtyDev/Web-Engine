@@ -1,0 +1,909 @@
+{
+  "$defs": {
+    "AboutSection": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "body": {
+          "default": "",
+          "title": "Body",
+          "type": "string"
+        },
+        "image": {
+          "default": "",
+          "title": "Image",
+          "type": "string"
+        },
+        "stats": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AboutStat"
+          },
+          "title": "Stats",
+          "type": "array"
+        }
+      },
+      "title": "AboutSection",
+      "type": "object"
+    },
+    "AboutStat": {
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "value"
+      ],
+      "title": "AboutStat",
+      "type": "object"
+    },
+    "ContactConfig": {
+      "properties": {
+        "phone": {
+          "default": "",
+          "title": "Phone",
+          "type": "string"
+        },
+        "email": {
+          "default": "",
+          "title": "Email",
+          "type": "string"
+        },
+        "address": {
+          "default": "",
+          "title": "Address",
+          "type": "string"
+        },
+        "map_embed_url": {
+          "default": "",
+          "title": "Map Embed Url",
+          "type": "string"
+        },
+        "hours": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ContactHours"
+          },
+          "title": "Hours",
+          "type": "array"
+        },
+        "social": {
+          "$ref": "#/$defs/SocialLinks",
+          "default": {
+            "facebook": null,
+            "instagram": null,
+            "whatsapp": null
+          }
+        }
+      },
+      "title": "ContactConfig",
+      "type": "object"
+    },
+    "ContactHours": {
+      "properties": {
+        "day": {
+          "title": "Day",
+          "type": "string"
+        },
+        "time": {
+          "title": "Time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "day",
+        "time"
+      ],
+      "title": "ContactHours",
+      "type": "object"
+    },
+    "ContactSection": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "show_form": {
+          "default": true,
+          "title": "Show Form",
+          "type": "boolean"
+        },
+        "show_map": {
+          "default": true,
+          "title": "Show Map",
+          "type": "boolean"
+        }
+      },
+      "title": "ContactSection",
+      "type": "object"
+    },
+    "FaqItem": {
+      "properties": {
+        "q": {
+          "title": "Q",
+          "type": "string"
+        },
+        "a": {
+          "title": "A",
+          "type": "string"
+        }
+      },
+      "required": [
+        "q",
+        "a"
+      ],
+      "title": "FaqItem",
+      "type": "object"
+    },
+    "FaqSection": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "items": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/FaqItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "title": "FaqSection",
+      "type": "object"
+    },
+    "Features": {
+      "properties": {
+        "booking_enabled": {
+          "default": false,
+          "title": "Booking Enabled",
+          "type": "boolean"
+        },
+        "newsletter_enabled": {
+          "default": false,
+          "title": "Newsletter Enabled",
+          "type": "boolean"
+        },
+        "blog_enabled": {
+          "default": false,
+          "title": "Blog Enabled",
+          "type": "boolean"
+        }
+      },
+      "title": "Features",
+      "type": "object"
+    },
+    "GallerySection": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "images": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Images",
+          "type": "array"
+        }
+      },
+      "title": "GallerySection",
+      "type": "object"
+    },
+    "HeroSection": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "headline": {
+          "default": "",
+          "title": "Headline",
+          "type": "string"
+        },
+        "subheadline": {
+          "default": "",
+          "title": "Subheadline",
+          "type": "string"
+        },
+        "cta_text": {
+          "default": "",
+          "title": "Cta Text",
+          "type": "string"
+        },
+        "cta_link": {
+          "default": "",
+          "title": "Cta Link",
+          "type": "string"
+        },
+        "background_image": {
+          "default": "",
+          "title": "Background Image",
+          "type": "string"
+        }
+      },
+      "title": "HeroSection",
+      "type": "object"
+    },
+    "MetaConfig": {
+      "properties": {
+        "business_name": {
+          "default": "",
+          "title": "Business Name",
+          "type": "string"
+        },
+        "business_type": {
+          "default": "other",
+          "enum": [
+            "clinic",
+            "restaurant",
+            "gym",
+            "salon",
+            "other"
+          ],
+          "title": "Business Type",
+          "type": "string"
+        },
+        "tagline": {
+          "default": "",
+          "title": "Tagline",
+          "type": "string"
+        },
+        "logo_url": {
+          "default": "",
+          "title": "Logo Url",
+          "type": "string"
+        },
+        "favicon_url": {
+          "default": "",
+          "title": "Favicon Url",
+          "type": "string"
+        }
+      },
+      "title": "MetaConfig",
+      "type": "object"
+    },
+    "NavItem": {
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "section"
+      ],
+      "title": "NavItem",
+      "type": "object"
+    },
+    "OfferingItem": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "price": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Price"
+        },
+        "currency": {
+          "default": "INR",
+          "title": "Currency",
+          "type": "string"
+        },
+        "image": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image"
+        },
+        "icon": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Icon"
+        },
+        "featured": {
+          "default": false,
+          "title": "Featured",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "OfferingItem",
+      "type": "object"
+    },
+    "OfferingsSection": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "default": "services",
+          "enum": [
+            "services",
+            "menu",
+            "programs"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "items": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/OfferingItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "title": "OfferingsSection",
+      "type": "object"
+    },
+    "PricingPlan": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "price": {
+          "title": "Price",
+          "type": "number"
+        },
+        "currency": {
+          "default": "INR",
+          "title": "Currency",
+          "type": "string"
+        },
+        "period": {
+          "default": "month",
+          "title": "Period",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "features": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Features",
+          "type": "array"
+        },
+        "featured": {
+          "default": false,
+          "title": "Featured",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "price"
+      ],
+      "title": "PricingPlan",
+      "type": "object"
+    },
+    "PricingSection": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "plans": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PricingPlan"
+          },
+          "title": "Plans",
+          "type": "array"
+        }
+      },
+      "title": "PricingSection",
+      "type": "object"
+    },
+    "Sections": {
+      "properties": {
+        "hero": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HeroSection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "about": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AboutSection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "offerings": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OfferingsSection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "gallery": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GallerySection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "team": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TeamSection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "testimonials": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestimonialsSection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pricing": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PricingSection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "faq": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FaqSection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "contact": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ContactSection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "Sections",
+      "type": "object"
+    },
+    "SeoConfig": {
+      "properties": {
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "keywords": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Keywords",
+          "type": "array"
+        },
+        "og_image": {
+          "default": "",
+          "title": "Og Image",
+          "type": "string"
+        }
+      },
+      "title": "SeoConfig",
+      "type": "object"
+    },
+    "SocialLinks": {
+      "properties": {
+        "facebook": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Facebook"
+        },
+        "instagram": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Instagram"
+        },
+        "whatsapp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Whatsapp"
+        }
+      },
+      "title": "SocialLinks",
+      "type": "object"
+    },
+    "TeamMember": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "photo": {
+          "default": "",
+          "title": "Photo",
+          "type": "string"
+        },
+        "bio": {
+          "default": "",
+          "title": "Bio",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "role"
+      ],
+      "title": "TeamMember",
+      "type": "object"
+    },
+    "TeamSection": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "members": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/TeamMember"
+          },
+          "title": "Members",
+          "type": "array"
+        }
+      },
+      "title": "TeamSection",
+      "type": "object"
+    },
+    "TestimonialItem": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "rating": {
+          "default": 5,
+          "title": "Rating",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "text"
+      ],
+      "title": "TestimonialItem",
+      "type": "object"
+    },
+    "TestimonialsSection": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "items": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/TestimonialItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "title": "TestimonialsSection",
+      "type": "object"
+    },
+    "ThemeConfig": {
+      "properties": {
+        "primary_color": {
+          "default": "#2563eb",
+          "title": "Primary Color",
+          "type": "string"
+        },
+        "secondary_color": {
+          "default": "#64748b",
+          "title": "Secondary Color",
+          "type": "string"
+        },
+        "accent_color": {
+          "default": "#f59e0b",
+          "title": "Accent Color",
+          "type": "string"
+        },
+        "font_heading": {
+          "default": "Inter",
+          "title": "Font Heading",
+          "type": "string"
+        },
+        "font_body": {
+          "default": "Inter",
+          "title": "Font Body",
+          "type": "string"
+        },
+        "border_radius": {
+          "default": "md",
+          "enum": [
+            "sm",
+            "md",
+            "lg",
+            "full"
+          ],
+          "title": "Border Radius",
+          "type": "string"
+        }
+      },
+      "title": "ThemeConfig",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "client_id": {
+      "title": "Client Id",
+      "type": "string"
+    },
+    "meta": {
+      "$ref": "#/$defs/MetaConfig",
+      "default": {
+        "business_name": "",
+        "business_type": "other",
+        "tagline": "",
+        "logo_url": "",
+        "favicon_url": ""
+      }
+    },
+    "seo": {
+      "$ref": "#/$defs/SeoConfig",
+      "default": {
+        "title": "",
+        "description": "",
+        "keywords": [],
+        "og_image": ""
+      }
+    },
+    "theme": {
+      "$ref": "#/$defs/ThemeConfig",
+      "default": {
+        "primary_color": "#2563eb",
+        "secondary_color": "#64748b",
+        "accent_color": "#f59e0b",
+        "font_heading": "Inter",
+        "font_body": "Inter",
+        "border_radius": "md"
+      }
+    },
+    "contact": {
+      "$ref": "#/$defs/ContactConfig",
+      "default": {
+        "phone": "",
+        "email": "",
+        "address": "",
+        "map_embed_url": "",
+        "hours": [],
+        "social": {
+          "facebook": null,
+          "instagram": null,
+          "whatsapp": null
+        }
+      }
+    },
+    "navigation": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/NavItem"
+      },
+      "title": "Navigation",
+      "type": "array"
+    },
+    "sections": {
+      "$ref": "#/$defs/Sections",
+      "default": {
+        "hero": null,
+        "about": null,
+        "offerings": null,
+        "gallery": null,
+        "team": null,
+        "testimonials": null,
+        "pricing": null,
+        "faq": null,
+        "contact": null
+      }
+    },
+    "features": {
+      "$ref": "#/$defs/Features",
+      "default": {
+        "booking_enabled": false,
+        "newsletter_enabled": false,
+        "blog_enabled": false
+      }
+    }
+  },
+  "required": [
+    "client_id"
+  ],
+  "title": "ClientConfig",
+  "type": "object"
+}
