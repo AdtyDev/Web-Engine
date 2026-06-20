@@ -3,11 +3,19 @@
 // On a PaaS, set API_URL in public/runtime-config.js to the actual backend domain — no rebuild needed.
 const API_BASE = window.__APP_CONFIG__?.API_URL || "/api";
 
-export const fetchConfig = () =>
-  fetch(`${API_BASE}/config`).then((r) => {
+/**
+ * Fetch the site config.
+ * @param {string|null} clientOverride  Dev-only: pass a client_id to preview a different config.
+ */
+export const fetchConfig = (clientOverride = null) => {
+  const url = clientOverride
+    ? `${API_BASE}/config?client=${encodeURIComponent(clientOverride)}`
+    : `${API_BASE}/config`;
+  return fetch(url).then((r) => {
     if (!r.ok) throw new Error(`Failed to load config: ${r.status}`);
     return r.json();
   });
+};
 
 export const postContact = (data) =>
   fetch(`${API_BASE}/contact`, {

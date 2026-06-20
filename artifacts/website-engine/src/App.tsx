@@ -11,6 +11,7 @@ import { Testimonials } from "./components/sections/Testimonials";
 import { Pricing } from "./components/sections/Pricing";
 import { FAQ } from "./components/sections/FAQ";
 import { ContactForm } from "./components/sections/ContactForm";
+import { DevSwitcher } from "./components/dev/DevSwitcher";
 
 function SiteContent() {
   const { config, loading, error } = useConfig();
@@ -20,7 +21,10 @@ function SiteContent() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="text-center">
-          <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <div
+            className="w-10 h-10 border-4 border-t-transparent rounded-full animate-spin mx-auto mb-3"
+            style={{ borderColor: "var(--color-primary)", borderTopColor: "transparent" }}
+          />
           <p className="text-gray-500 text-sm">Loading…</p>
         </div>
       </div>
@@ -70,6 +74,9 @@ function SiteContent() {
         <FAQ section={s.faq} />
         <ContactForm section={s.contact} contactConfig={config?.contact} />
       </Layout>
+
+      {/* Dev-only client switcher — compiled away in production builds */}
+      {import.meta.env.DEV && <DevSwitcher />}
     </>
   );
 }

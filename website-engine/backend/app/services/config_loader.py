@@ -7,6 +7,11 @@ Design contract (from spec §4 and §7):
   - Never serve a half-broken config silently.
   - Cached after the first successful load (lru_cache maxsize=1).
     Call `get_config.cache_clear()` in tests to reset between test cases.
+
+  - `load_config_for_client(client_id)` is the non-cached variant used by:
+      * The dev-only ?client= query param override
+      * Tests and CLI tooling
+      * `load_config_from_file()` for an explicit path
 """
 import json
 from functools import lru_cache
@@ -21,20 +26,32 @@ from app.models.config_schema import ClientConfig
 @lru_cache(maxsize=1)
 def get_config() -> ClientConfig:
     """
-    Load, parse, and validate the config. Raises on any error.
+    Load, parse, and validate the startup config. Raises on any error.
 
     Raises:
         FileNotFoundError: if the config file doesn't exist.
-        ValueError: if the JSON is malformed.
-        pydantic.ValidationError: if the config doesn't match the schema.
+        ValueError: if the JSON is malformed or fails validation.
     """
-    config_path = _resolve_config_path(settings.config_dir, settings.client_id)
+    return load_config_for_client(settings.client_id)
+
+
+def load_config_for_client(client_id: str) -> ClientConfig:
+    """
+    Load and validate the config for an arbitrary client_id.
+    NOT cached — each call reads from disk.
+    Used by the dev ?client= override, tests, and CLI tooling.
+
+    Raises:
+        FileNotFoundError | ValueError
+    """
+    config_path = _resolve_config_path(settings.config_dir, client_id)
 
     if not config_path.exists():
+        available = list(Path(settings.config_dir).glob("*.json"))
         raise FileNotFoundError(
             f"\n\n[website-engine] Config file not found: {config_path}\n"
             f"  Set CLIENT_ID to match a file in {settings.config_dir}/\n"
-            f"  Available files: {list(Path(settings.config_dir).glob('*.json'))}\n"
+            f"  Available files: {available}\n"
         )
 
     try:
@@ -51,13 +68,8 @@ def get_config() -> ClientConfig:
         raise ValueError(
             f"\n\n[website-engine] Config validation failed for {config_path}:\n"
             f"{exc}\n\n"
-            f"  Correct the config or run 'python scripts/generate_schema.py' to see the expected schema.\n"
+            f"  Run 'python scripts/generate_schema.py' to see the expected schema.\n"
         ) from exc
-
-
-def _resolve_config_path(config_dir: str, client_id: str) -> Path:
-    """Return the resolved Path for a given config_dir and client_id."""
-    return Path(config_dir) / f"{client_id}.json"
 
 
 def load_config_from_file(path: Path) -> ClientConfig:
@@ -79,3 +91,8 @@ def load_config_from_file(path: Path) -> ClientConfig:
         return ClientConfig.model_validate(raw)
     except ValidationError as exc:
         raise ValueError(f"Config validation failed for {path}:\n{exc}") from exc
+
+
+def _resolve_config_path(config_dir: str, client_id: str) -> Path:
+    """Return the resolved Path for a given config_dir and client_id."""
+    return Path(config_dir) / f"{client_id}.json"
