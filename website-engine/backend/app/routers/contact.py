@@ -114,13 +114,21 @@ async def submit_contact(request: Request, body: ContactFormInput) -> dict:
             headers={"Retry-After": str(int(retry_after))},
         )
 
-    # 3. Send email
+    # 3. Send email — include the business name in the subject line
+    from app.services.config_loader import get_config as _get_config
+    try:
+        _cfg = _get_config()
+        _biz = _cfg.meta.business_name
+    except Exception:
+        _biz = ""
+
     try:
         send_contact_email(
             name=body.name,
             email=str(body.email),
             phone=body.phone,
             message=body.message,
+            business_name=_biz,
         )
     except smtplib.SMTPException as exc:
         logger.error("SMTP failure sending contact email from %s: %s", body.email, exc)
