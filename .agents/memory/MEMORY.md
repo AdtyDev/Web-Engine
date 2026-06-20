@@ -1,0 +1,1 @@
+- [Website Engine stack](website-engine-stack.md) — Python FastAPI backend + React/Vite/Tailwind frontend, config-driven, phase-by-phase build.

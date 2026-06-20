@@ -307,6 +307,37 @@
   }
 }
 
+/* Smooth scroll for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offset anchor targets so fixed navbar doesn't cover them */
+[id] {
+  scroll-margin-top: 4rem;
+}
+
+/* Fade-in keyframe used by Hero */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure CSS var defaults exist before useTheme fires */
+:root {
+  --color-primary: #2563eb;
+  --color-secondary: #64748b;
+  --color-accent: #f59e0b;
+  --font-heading: Georgia, serif;
+  --font-body: system-ui, sans-serif;
+}
+
 /**
  * Using the elevate system.
  * Automatic contrast adjustment.
