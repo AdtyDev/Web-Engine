@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Response
 
 from app.core.settings import settings
 from app.models.config_schema import ClientConfig
@@ -13,7 +13,7 @@ async def get_site_config(
         default=None,
         description="Dev-only: override CLIENT_ID for this request. Forbidden in production.",
     ),
-) -> ClientConfig:
+) -> Response:
     """
     Return the validated site config.
 
@@ -27,6 +27,13 @@ async def get_site_config(
                 status_code=403,
                 detail="Client override is only allowed in dev mode.",
             )
-        return load_config_for_client(client)
+        cfg = load_config_for_client(client)
+    else:
+        cfg = get_config()
 
-    return get_config()
+    # Prevent browser caching so config changes reflect immediately
+    return Response(
+        content=cfg.model_dump_json(),
+        media_type="application/json",
+        headers={"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"}
+    )

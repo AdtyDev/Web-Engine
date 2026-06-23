@@ -1,4 +1,12 @@
-# Python
+.env
+.env.local
+.env.*
+node_modules/
+dist/
+.DS_Store
+.vscode/
+coverage/
+pnpm-lock.yaml# Python
 __pycache__/
 *.pyc
 *.pyo

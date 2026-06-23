@@ -55,9 +55,11 @@ website-engine/
 ├── docker-compose.yml           # VPS deployment
 ├── nginx/default.conf
 ├── render.yaml                  # PaaS deployment blueprint
+├── frontend/Dockerfile          # Static frontend container for VPS
+├── frontend/tailwind.config.js  # Tailwind config for the frontend app
 └── README.md
 
-artifacts/website-engine/       # React + Vite frontend (Replit workspace package)
+website-engine/frontend/       # React + Vite frontend package
 ├── public/runtime-config.js    # API_URL injection — overwrite at deploy time
 ├── src/
 │   ├── api/client.js
@@ -82,10 +84,11 @@ See `docs/NEW_CLIENT_WORKFLOW.md` → Step 4 for both PaaS and VPS paths.
 | Phase | Status |
 |---|---|
 | 1. Scaffold | ✅ |
-| 2. Backend core | 🔜 |
-| 3. Sample configs | ✅ (done alongside scaffold) |
-| 4. Frontend core | 🔜 |
-| 5. Section components | 🔜 |
-| 6. Contact form end-to-end | 🔜 |
-| 7. Deployment artifacts | 🔜 |
-| 8. Polish pass | 🔜 |
+| 2. Backend core | ✅ |
+| 3. Sample configs | ✅ |
+| 4. Frontend core | ✅ |
+| 5. Section components | ✅ |
+| 6. Contact form end-to-end | ✅ |
+| 7. Deployment artifacts | ✅ |
+| 8. CI workflow | ✅ |
+| 9. Polish pass | 🔜 |

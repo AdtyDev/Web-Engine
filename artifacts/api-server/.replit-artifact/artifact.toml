@@ -10,7 +10,7 @@ name = "API Server"
 paths = ["/api"]
 
 [services.development]
-run = "bash -c 'cd /home/runner/workspace/website-engine/backend && CLIENT_ID=clinic uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload'"
+run = "bash -c 'cd /home/runner/workspace/website-engine/backend && set -a; source .env 2>/dev/null || true; set +a; uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload'"
 
 [services.production]
 
@@ -23,7 +23,7 @@ args = ["bash", "-c", "cd /home/runner/workspace/website-engine/backend && uvico
 [services.production.run.env]
 PORT = "8080"
 ENV = "prod"
-CLIENT_ID = "clinic"
+CLIENT_ID = "restaurant"
 
 [services.production.health.startup]
 path = "/api/health"

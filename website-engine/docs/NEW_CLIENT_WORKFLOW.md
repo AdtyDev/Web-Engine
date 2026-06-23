@@ -13,7 +13,7 @@ Fill in all fields. See `CONFIG_SCHEMA.md` for the full reference.
 Drop images into the frontend asset folder:
 
 ```
-artifacts/website-engine/public/assets/{slug}/
+website-engine/frontend/public/assets/{slug}/
 ```
 
 Reference them in the config as `/assets/{slug}/hero.jpg` etc.
@@ -38,12 +38,12 @@ Hit `GET /api/config` and confirm the correct JSON is returned.
 1. Backend → Web Service
    - Build: `pip install -r requirements.txt`
    - Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-   - Env: `CLIENT_ID={slug}`, `ALLOWED_ORIGINS=https://{frontend-domain}`
+   - Env: `CLIENT_ID={slug}`, `ALLOWED_ORIGINS_RAW=https://{frontend-domain}`
 
 2. Frontend → Static Site
    - Build command:
      ```
-     echo "window.__APP_CONFIG__={API_URL:'https://{backend-url}'};" > public/runtime-config.js && npm install && npm run build
+     corepack enable pnpm && pnpm install && echo "window.__APP_CONFIG__={API_URL:'https://{backend-url}'};" > public/runtime-config.js && pnpm run build
      ```
    - Publish directory: `dist`
 

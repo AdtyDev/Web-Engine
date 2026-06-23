@@ -18,6 +18,8 @@ function SiteContent() {
   const { config, loading, error } = useConfig();
   useTheme(config?.theme);
 
+  const envMode = import.meta.env.VITE_APP_ENV ?? (import.meta.env.PROD ? "prod" : "dev");
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -76,8 +78,8 @@ function SiteContent() {
         <ContactForm section={s.contact} contactConfig={config?.contact} />
       </Layout>
 
-      {/* Dev-only client switcher — compiled away in production builds */}
-      {import.meta.env.DEV && <DevSwitcher />}
+      {/* Dev-only client switcher — hidden when VITE_APP_ENV=prod and compiled away in production builds */}
+      {import.meta.env.DEV && envMode !== "prod" && <DevSwitcher />}
     </>
   );
 }

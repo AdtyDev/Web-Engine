@@ -94,5 +94,13 @@ def load_config_from_file(path: Path) -> ClientConfig:
 
 
 def _resolve_config_path(config_dir: str, client_id: str) -> Path:
-    """Return the resolved Path for a given config_dir and client_id."""
-    return Path(config_dir) / f"{client_id}.json"
+    """Return the resolved Path for a given config_dir and client_id.
+
+    Relative config_dir values are interpreted relative to the backend package
+    root, not the current working directory. That makes tests and deployments
+    more predictable when the backend is imported from outside its own folder.
+    """
+    base = Path(config_dir)
+    if not base.is_absolute():
+        base = Path(__file__).resolve().parents[2] / config_dir
+    return base / f"{client_id}.json"

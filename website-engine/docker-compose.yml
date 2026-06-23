@@ -11,7 +11,7 @@ services:
     environment:
       - CLIENT_ID=clinic
       - CONFIG_DIR=./configs
-      - ALLOWED_ORIGINS=https://sunriseclinic.example.com
+      - ALLOWED_ORIGINS_RAW=https://sunriseclinic.example.com
       - ENV=prod
       # SMTP_* from .env or Docker secrets
     volumes:
@@ -23,7 +23,7 @@ services:
   #   build: ./backend
   #   environment:
   #     - CLIENT_ID=restaurant
-  #     - ALLOWED_ORIGINS=https://tandoorandtales.example.com
+  #     - ALLOWED_ORIGINS_RAW=https://tandoorandtales.example.com
   #     - ENV=prod
   #   volumes:
   #     - ./backend/configs:/app/configs:ro
@@ -34,7 +34,7 @@ services:
     image: nginx:1.25-alpine
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./frontend-dist:/usr/share/nginx/html:ro  # pre-built Vite output
+      - ./frontend/dist:/usr/share/nginx/html:ro  # pre-built Vite output
     ports:
       - "80:80"
       - "443:443"

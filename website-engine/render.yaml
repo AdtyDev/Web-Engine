@@ -15,7 +15,7 @@ services:
         value: CLIENTSLUG          # <-- change this
       - key: CONFIG_DIR
         value: ./configs
-      - key: ALLOWED_ORIGINS
+      - key: ALLOWED_ORIGINS_RAW
         value: https://FRONTENDDOMAIN  # <-- change this
       - key: ENV
         value: prod
@@ -24,11 +24,12 @@ services:
   - type: web
     name: website-engine-frontend-CLIENTSLUG
     runtime: static
-    rootDir: artifacts/website-engine
+    rootDir: website-engine/frontend
     buildCommand: >
-      echo "window.__APP_CONFIG__={API_URL:'https://BACKENDDOMAIN'};" > public/runtime-config.js
-      && npm install
-      && npm run build
+      corepack enable pnpm
+      && pnpm install
+      && echo "window.__APP_CONFIG__={API_URL:'https://BACKENDDOMAIN'};" > public/runtime-config.js
+      && pnpm run build
     staticPublishPath: dist
     # The same compiled bundle works for every client —
     # only public/runtime-config.js (written above) differs.

@@ -25,7 +25,7 @@
     "phone": "+91 98201 34567",
     "email": "hello@sunriseclinic.in",
     "address": "Shop 4, Sunrise Complex, Lokhandwala Road, Andheri West, Mumbai 400 053",
-    "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.1",
+    "map_embed_url": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14682.264862877884!2d72.5193194!3d23.0763597!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e83ad78396203%3A0xdc9802ef79e23f5c!2sSmile%20dental%20clinic%20and%20Implant%20center!5e0!3m2!1sen!2sin!4v1782200187285!5m2!1sen!2sin",
     "hours": [
       { "day": "Monday – Friday", "time": "9:00 AM – 8:00 PM" },
       { "day": "Saturday", "time": "9:00 AM – 5:00 PM" },
@@ -80,7 +80,7 @@
           "currency": "INR",
           "image": null,
           "icon": "stethoscope",
-          "featured": true
+          "featured": false
         },
         {
           "id": "dermatology",
@@ -186,6 +186,11 @@
           "name": "Sunita M.",
           "text": "Annual health package was great value — 30+ tests and a thorough review in one morning. No waiting around.",
           "rating": 4
+        },
+        {
+          "name": "Vikram S.",
+          "text": "The dermatology consultation was excellent. Dr. Nair explained my skin condition clearly and prescribed an effective treatment plan.",
+          "rating": 5
         }
       ]
     },
@@ -219,8 +224,8 @@
     "contact": {
       "enabled": true,
       "title": "Get in Touch",
-      "show_form": true,
-      "show_map": true
+      "show_form": false,
+      "show_map": false
     }
   },
   "features": {
